@@ -3,7 +3,7 @@ const db = require('../database/dbConfig');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { authenticate } = require('./middlewares');
+const { authenticate, generateToken } = require('./middlewares');
 
 module.exports = server => {
   server.post('/api/register', register);
@@ -14,10 +14,11 @@ module.exports = server => {
 function register(req, res) {
   // implement user registration
   const credentials = req.body;
+  console.log(credentials);
 
   const hash = bcrypt.hashSync(credentials.password, 14);
   credentials.password = hash;
-  db(users)
+  db('users')
     .insert(credentials)
     .then(function(ids) {
       db('users')

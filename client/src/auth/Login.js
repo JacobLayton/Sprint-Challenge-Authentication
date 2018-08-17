@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 
 class Login extends Component {
@@ -43,6 +44,15 @@ class Login extends Component {
 
   submitHandler = e => {
     e.preventDefault();
+
+    axios
+      .post('http://localhost:3000/login', this.state)
+      .then(res => {
+        console.log('data', res.data);
+      })
+      .catch(err => { 
+        console.log('Axios failed');
+      });
 
     console.log('state', this.state);
   }
